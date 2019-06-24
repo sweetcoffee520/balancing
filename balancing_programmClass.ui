@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>balancing_programmClass</class>
+ <widget class="QMainWindow" name="balancing_programmClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>837</width>
+    <height>678</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>balancing_programm</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>837</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="file">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_open"/>
+    <addaction name="actionsave"/>
+   </widget>
+   <widget class="QMenu" name="method">
+    <property name="title">
+     <string>平差方法</string>
+    </property>
+    <addaction name="actioncod_adjust"/>
+    <addaction name="actionird_adjust"/>
+   </widget>
+   <widget class="QMenu" name="display">
+    <property name="title">
+     <string>显示</string>
+    </property>
+    <addaction name="actionori_data"/>
+    <addaction name="actionleve_network"/>
+    <addaction name="actionresult"/>
+   </widget>
+   <widget class="QMenu" name="help">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+   </widget>
+   <addaction name="file"/>
+   <addaction name="method"/>
+   <addaction name="display"/>
+   <addaction name="help"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="action_open"/>
+   <addaction name="actionsave"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_open">
+   <property name="text">
+    <string>打开</string>
+   </property>
+  </action>
+  <action name="actionsave">
+   <property name="text">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="actioncod_adjust">
+   <property name="text">
+    <string>条件平差</string>
+   </property>
+  </action>
+  <action name="actionird_adjust">
+   <property name="text">
+    <string>间接平差</string>
+   </property>
+  </action>
+  <action name="actionori_data">
+   <property name="text">
+    <string>原始数据</string>
+   </property>
+  </action>
+  <action name="actionleve_network">
+   <property name="text">
+    <string>水准网</string>
+   </property>
+  </action>
+  <action name="actionresult">
+   <property name="text">
+    <string>平差结果</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="balancing_programm.qrc"/>
+ </resources>
+ <connections/>
+</ui>
