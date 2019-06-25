@@ -55,6 +55,7 @@
     <addaction name="separator"/>
     <addaction name="actionleve_network"/>
     <addaction name="separator"/>
+    <addaction name="action_result"/>
    </widget>
    <widget class="QMenu" name="help">
     <property name="title">
@@ -135,6 +136,11 @@
   <action name="action_close">
    <property name="text">
     <string>关闭</string>
+   </property>
+  </action>
+  <action name="action_result">
+   <property name="text">
+    <string>显示结果</string>
    </property>
   </action>
  </widget>

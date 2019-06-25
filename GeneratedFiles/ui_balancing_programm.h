@@ -36,6 +36,7 @@ public:
     QAction *actionresult;
     QAction *actionhelp;
     QAction *action_close;
+    QAction *action_result;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QTableWidget *tableWidget;
@@ -78,6 +79,8 @@ public:
         actionhelp->setObjectName(QString::fromUtf8("actionhelp"));
         action_close = new QAction(balancing_programmClass);
         action_close->setObjectName(QString::fromUtf8("action_close"));
+        action_result = new QAction(balancing_programmClass);
+        action_result->setObjectName(QString::fromUtf8("action_result"));
         centralWidget = new QWidget(balancing_programmClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -125,6 +128,7 @@ public:
         display->addSeparator();
         display->addAction(actionleve_network);
         display->addSeparator();
+        display->addAction(action_result);
         help->addAction(actionhelp);
         mainToolBar->addAction(action_open);
         mainToolBar->addAction(action_save);
@@ -146,6 +150,7 @@ public:
         actionresult->setText(QApplication::translate("balancing_programmClass", "\345\271\263\345\267\256\347\273\223\346\236\234", nullptr));
         actionhelp->setText(QApplication::translate("balancing_programmClass", "\345\270\256\345\212\251\346\226\207\346\241\243", nullptr));
         action_close->setText(QApplication::translate("balancing_programmClass", "\345\205\263\351\227\255", nullptr));
+        action_result->setText(QApplication::translate("balancing_programmClass", "\346\230\276\347\244\272\347\273\223\346\236\234", nullptr));
         file->setTitle(QApplication::translate("balancing_programmClass", "\346\226\207\344\273\266", nullptr));
         method->setTitle(QApplication::translate("balancing_programmClass", "\345\271\263\345\267\256\346\226\271\346\263\225", nullptr));
         display->setTitle(QApplication::translate("balancing_programmClass", "\346\230\276\347\244\272", nullptr));

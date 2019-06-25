@@ -32,6 +32,8 @@ private slots:
 	void ori_data();
 	//水准网
 	void level_network();
+	//显示解雇
+	void showresult();
 
 private:
 	Ui::balancing_programmClass ui;

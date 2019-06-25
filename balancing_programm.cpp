@@ -16,6 +16,10 @@ int observe_num;
 QList <edge> edges;
 QList <point> points;
 
+Matrix v, L(observe_num, 1),DXX;
+//中误差
+double o;
+
 void get_B_l(Matrix &B,Matrix &L);
 balancing_programm::balancing_programm(QWidget *parent)
 	: QMainWindow(parent)
@@ -28,6 +32,7 @@ balancing_programm::balancing_programm(QWidget *parent)
 	connect(ui.actionird_adjust, &QAction::triggered, this, &balancing_programm::ird_adjust);
 	connect(ui.actionori_data, &QAction::triggered, this, &balancing_programm::ori_data);
 	connect(ui.actionleve_network, &QAction::triggered, this, &balancing_programm::level_network);
+	connect(ui.action_result, &QAction::triggered, this, &balancing_programm::showresult);
 	connect(ui.actionhelp, &QAction::triggered, this, &balancing_programm::help);
 }
  
@@ -129,25 +134,28 @@ void balancing_programm::ird_adjust()
 		QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("请先读取文件"));
 		return;
 	}
+	Matrix temp(observe_num,1);
 	int i;
-	Matrix B(observe_num, unknow_point_num), l(observe_num, 1), x,P(observe_num,observe_num),NBB,W,v,L(observe_num,1);
+	Matrix B(observe_num, unknow_point_num), l(observe_num, 1), x,P(observe_num,observe_num),NBB,W;
 	get_B_l(B, l);
 	//计算权阵
 	for (i = 0; i < observe_num; i++)
 	{
-		L.set(i, 0, edges.at(i).observe_intercept);
+		temp.set(i, 0, edges.at(i).observe_intercept);
 		P.set(i, i, 1/edges.at(i).observe_intercept);
 	}
 	NBB = B.Trans()*P*B;
 	W = B.Trans()*P*l;
 	x = NBB.Inverse()*W;
 	v = B * x - l;
-	L = L + v;
+	L = temp + v;
+	o = sqrt((v.Trans()*P*v).get(0,0)/(observe_num-unknow_point_num));
+	DXX = o*o*P.Inverse();
 	ui.tableWidget->clear();
 	QStringList list;
-	ui.tableWidget->setColumnCount(5);
+	ui.tableWidget->setColumnCount(4);
 	ui.tableWidget->setRowCount(observe_num);
-	ui.tableWidget->setHorizontalHeaderLabels(QStringList() << QStringLiteral("起点点号") << QStringLiteral("终点点号") << QStringLiteral("观测高差") << QStringLiteral("改正后高差") << QStringLiteral("已知点高差"));
+	ui.tableWidget->setHorizontalHeaderLabels(QStringList() << QStringLiteral("起点点号") << QStringLiteral("终点点号") << QStringLiteral("观测高差") << QStringLiteral("改正后高差"));
 	for (i = 0; i < observe_num; i++)
 	{
 		list << edges.at(i).beginpoint << edges.at(i).endpoint << QString::number(edges.at(i).observe_intercept) << QString::number(L.get(i, 0));
@@ -173,7 +181,7 @@ void balancing_programm::ori_data()
 	ui.tableWidget->setColumnCount(4);
 	ui.tableWidget->setRowCount(observe_num);
 	//设置表头
-	ui.tableWidget->setHorizontalHeaderLabels(QStringList() << QStringLiteral("起点点号") << QStringLiteral("终点点号") << QStringLiteral("观测高差") << QStringLiteral("观测距离") << QStringLiteral("已知点高差"));
+	ui.tableWidget->setHorizontalHeaderLabels(QStringList() << QStringLiteral("起点点号") << QStringLiteral("终点点号") << QStringLiteral("观测高差") << QStringLiteral("观测距离"));
 	QStringList list;
 	for (i = 0; i < observe_num; i++)
 	{
@@ -205,11 +213,31 @@ void balancing_programm::level_network()
 	ui.tableWidget->resizeRowToContents(0);
 }
 
+void balancing_programm::showresult()
+{
+	int i;
+	ui.tableWidget->clear();
+	QStringList list;
+	ui.tableWidget->setColumnCount(3);
+	ui.tableWidget->setRowCount(observe_num);
+	ui.tableWidget->setHorizontalHeaderLabels(QStringList() << QStringLiteral("改正数") << QStringLiteral("改正后高差") << QStringLiteral("中误差"));
+	for (i = 0; i < observe_num; i++)
+	{
+		list << QString::number(v.get(i, 0)) << QString::number(L.get(i, 0)) << QString::number(DXX.get(i,i));
+		int col = 0;
+		ui.tableWidget->setItem(i, col++, new QTableWidgetItem(list.at(0)));
+		ui.tableWidget->setItem(i, col++, new QTableWidgetItem(list.at(1)));
+		ui.tableWidget->setItem(i, col++, new QTableWidgetItem(list.at(2)));
+		list.clear();
+	}
+}
 
 void balancing_programm::help()
 {
 	QMessageBox::information(this, QStringLiteral("帮助文档"), QStringLiteral("此程序由Qt开发：\n该程序界面的文件栏有打开，保存，关闭三种功能；\n平差方法有条件平差和间接平差；\n显示中有显示原始数据和水准网；\n注意：点击打开文件后，文件内容不会显示，如要显示，点击显示栏下的显示原始数据；\n具体操作：点击打开文件后点击平差方法栏下的两种平差方法，之后会立即显示平差后的结果。然后点击保存文件。保存文件格式和表格内的格式相同；"));
 }
+
+
 
 void get_B_l(Matrix & B, Matrix & l)
 {
