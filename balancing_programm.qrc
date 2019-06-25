@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Images/保存.png</file>
         <file>Images/打开.png</file>
+        <file>Images/level_network.png</file>
     </qresource>
 </RCC>

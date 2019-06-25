@@ -13,9 +13,9 @@ class balancing_programm : public QMainWindow
 
 public:
 	balancing_programm(QWidget *parent = Q_NULLPTR);
+	QString Filename;
+	//已知点个数
 private slots:
-	//计算
-	void calculate();
 	//读文件
 	void readfile();
 	//写文件
@@ -32,23 +32,11 @@ private slots:
 	void ori_data();
 	//水准网
 	void level_network();
-	//结果
-	void result();
 
 private:
-	QString Filename;
-	//已知点个数
-	int know_point_num;
-	//未知点个数
-	int unknow_point_num;
-	//观测值个数
-	int observe_num;
-	//已知点高程
-	QList <double> know_point_altitude;
-	QList <edge> edges;
-	QList <point> points;
 	Ui::balancing_programmClass ui;
 };
+
 
 //边类
 class edge
