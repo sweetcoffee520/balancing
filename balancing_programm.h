@@ -14,7 +14,6 @@ class balancing_programm : public QMainWindow
 public:
 	balancing_programm(QWidget *parent = Q_NULLPTR);
 	QString Filename;
-	//已知点个数
 private slots:
 	//读文件
 	void readfile();
