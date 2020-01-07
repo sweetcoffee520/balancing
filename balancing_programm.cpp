@@ -141,7 +141,7 @@ void balancing_programm::ird_adjust()
 	//º∆À„»®’Û
 	for (i = 0; i < observe_num; i++)
 	{
-		temp.set(i, 0, edges.at(i).observe_intercept);
+		temp.set(i, 0, edges.at(i).route_length);
 		P.set(i, i, 1/edges.at(i).observe_intercept);
 	}
 	NBB = B.Trans()*P*B;
